@@ -1,6 +1,6 @@
-# Assignment #6: Image rotation
+# Assignment: Image rotation
 ---
-Лабораторная работа №6: поворот картинки
+Лабораторная работа: Поворот картинки
 
 # Подготовка
 
