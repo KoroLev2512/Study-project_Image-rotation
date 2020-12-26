@@ -4,7 +4,7 @@
 
 # Подготовка
 
-- Прочитайте главу 12 (стр. 221, 231-239) и 13 (целиком) "Low-level programming: C, assembly and program execution". 
+- Прочитайте главу 12 (стр. 221, 231&ndash;239) и 13 (целиком) "Low-level programming: C, assembly and program execution". 
 
 На защите мы можем обсуждать любые вопросы из учебника из глав 8&ndash;13 включительно.
 
@@ -39,7 +39,7 @@ struct bmp_header __attribute__((packed))
 Каждый пиксель задаётся структурой размером 3 байта:
 
 ```c
-   struct pixel { uint8_t b, g, r; };
+   struct pixel { uint7_t b, g, r; };
 ```
 
 Если ширина изображения в пикселах кратна четырём, то строчки идут одна за другой без пропусков.
@@ -93,6 +93,37 @@ struct bmp_header __attribute__((packed))
     /* создаёт копию изображения, которая повёрнута на 90 градусов */
     struct image rotate( struct image const source );
     ```
+
+# Пользователям компилятора от Microsoft 
+
+Вам придётся задать структуру по-другому, без атрибута `packed`:
+
+```c
+#include  <stdint.h>
+#pragma pack(push, 1)
+struct bmp_header 
+{
+        uint16_t bfType;
+        uint32_t  bfileSize;
+        uint32_t bfReserved;
+        uint32_t bOffBits;
+        uint32_t biSize;
+        uint32_t biWidth;
+        uint32_t  biHeight;
+        uint16_t  biPlanes;
+        uint16_t biBitCount;
+        uint32_t biCompression;
+        uint32_t biSizeImage;
+        uint32_t biXPelsPerMeter;
+        uint32_t biYPelsPerMeter;
+        uint32_t biClrUsed;
+        uint32_t  biClrImportant;
+};
+#pragma pack(pop)
+```
+
+ 
+Объяснение этого прочтите находится на страницах 235&ndash;239 учебника. 
 
 
 
