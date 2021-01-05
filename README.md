@@ -164,10 +164,15 @@ struct bmp_header
 # Для самопроверки:
 
 - Функции должны получать все необходимые им данные через аргументы. 
+- Глобальные переменные запрещены.
+- Сообщения об ошибках должны выводиться в `stderr`. Общее правило:  результаты вычислений &mdash; в `stdout`, информация о том, *как* происходят вычисления &mdash; в `stderr`.
 - Нельзя смешивать логику вычислений и ввод-вывод.
 - Нельзя использовать `typedef` для определения структур ([объяснение](https://stepik.org/lesson/408350/step/2)), кроме структур из одного поля, которые являются аналогом `typedef`, но без неявных преобразований.
-- Ваш код должен компилироваться с флагами `-std=c18 -pedantic -Wall -Werror` (gcc) или `-std=c18 -pedantic -Wall -Werror` (clang). 
-  Пользователям MS Visual Studio придётся тяжко, поддержка C11/C17 пока есть только в [Visual Studio 2019 version 16.8 Preview 3](https://devblogs.microsoft.com/cppblog/c11-and-c17-standard-support-arriving-in-msvc).
+- Ваш код должен компилироваться с флагами `-std=c18 -pedantic -Wall -Werror` (gcc) или `-std=c18 -pedantic -Wall -Werror` (clang).
+
+
+  Пользователям MS Visual Studio придётся тяжко, поддержка C11/C17 пока есть только в [Visual Studio 2019 version 16.8 Preview 3](https://devblogs.microsoft.com/cppblog/c11-and-c17-standard-support-arriving-in-msvc). Установите флаги `/Wall` (all warnings) и `/WX` (warnings as errors).
+
   Можете попробовать использовать [`cl-clang`](https://clang.llvm.org/docs/MSVCCompatibility.html).
   
   Проверять Ваш код мы будем с помощью `gcc` и `Makefile`.
