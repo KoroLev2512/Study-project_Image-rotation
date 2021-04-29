@@ -1,0 +1,45 @@
+echo "--------------------"
+echo "Building tester"
+echo "--------------------"
+
+make -C tester
+
+echo "Compiling and testing with sanitizers"
+
+sanitizers=( '-fsanitize=leak -fsanitize=address'
+             '-fsanitize=memory -fsanitize-memory-track-origins=2' 
+             '-fsanitize=undefined'
+           )
+
+
+COMPARE_TEST_RESULTS=./tester/build/bmp-compare 
+
+for sanitizer in "${sanitizers[@]}"
+do 
+  echo "--------------------"
+  echo "Starting tests with the following sanitizer enabled: $sanitizer"
+  echo "--------------------"
+  make -C solution clean && make -C solution with="$sanitizer"  || { echo "Unable to compile; see log" ; exit 1 ; } 
+
+# Here we launch tests
+
+  for test in `ls tester/tests/* -d` ;
+  do
+    fst="$test/input.bmp" 
+    snd="$test/output.bmp"
+    expected="${snd/.bmp/_expected.bmp}"
+
+    ./solution/build/image-transformer "$fst" "$snd"
+
+    echo -e "\ncomparing: $fst and $expected"
+
+    $COMPARE_TEST_RESULTS "$snd" "$expected" && echo -e "OK\n" || exit 1 ;
+  
+  done 
+# tests end
+
+  
+echo ""
+
+done
+
