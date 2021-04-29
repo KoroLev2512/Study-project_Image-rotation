@@ -31,7 +31,7 @@ do
 
     ./solution/build/image-transformer "$fst" "$snd"
 
-    echo -e "\ncomparing: $fst and $expected"
+    echo -e "\ncomparing: $snd and $expected"
 
     $COMPARE_TEST_RESULTS "$snd" "$expected" && echo -e "OK\n" || exit 1 ;
   
